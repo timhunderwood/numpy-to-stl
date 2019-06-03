@@ -38,37 +38,6 @@ def _create_bar(
     """
     return CUBE * numpy.array([width_x, width_y, height]).T + numpy.array([x, y, 0])
 
-
-def _create_bars(
-    xs: numpy.ndarray,
-    ys: numpy.ndarray,
-    heights: numpy.ndarray,
-    base_height: float = 0,
-    base_padding: float = 5,
-):
-    """Returns a flat numpy array of bars of shape n*12,3,3 where n is the length of input arrays (e.g. xs).
-
-    A base bar (extending into the negative z) can be inserted below all bars.
-
-    :param xs:
-    :param ys:
-    :param heights:
-    :param base_height:
-    :return:
-    """
-    bars = [
-        _create_bar(x, y, BAR_WIDTH, BAR_WIDTH, height)
-        for x, y, height in zip(xs, ys, heights)
-    ]
-    if base_height > 0:
-        base = _create_base(xs, ys, base_height, base_padding)
-        bars.append(base)
-    # flatten along 0th and 1st dimension (i.e. (n,12,3,3)-> (n*12,3,3)
-    bars_array = numpy.array(bars)
-    bars_array = bars_array.reshape(-1, *bars_array.shape[-2:])
-    return bars_array
-
-
 def _create_base(
     xs: numpy.ndarray, ys: numpy.ndarray, base_height: float, base_padding: float
 ):

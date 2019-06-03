@@ -26,22 +26,6 @@ class TestNumpyStl(unittest.TestCase):
         )
         numpy.testing.assert_array_equal(test_output, expected_output)
 
-    def test_create_bars_no_base(self):
-        xs = numpy.array([1, 2, 3, 4])
-        ys = numpy.array([5, 6, 7, 8])
-        heights = numpy.array([9, 10, 11, 12])
-        base_height = 0
-        bars = sut._create_bars(xs, ys, heights, base_height=base_height)
-        self.assertEqual((48, 3, 3), bars.shape)
-
-    def test_create_bars_with_base(self):
-        xs = numpy.array([1, 2, 3, 4])
-        ys = numpy.array([5, 6, 7, 8])
-        heights = numpy.array([9, 10, 11, 12])
-        base_height = 1
-        bars = sut._create_bars(xs, ys, heights, base_height=base_height)
-        self.assertEqual((60, 3, 3), bars.shape)
-
     def test_create_base(self):
         xs = numpy.array([1, 2, 3, 4])
         ys = numpy.array([5, 6, 7, 8])
