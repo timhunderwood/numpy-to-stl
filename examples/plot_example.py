@@ -3,6 +3,7 @@ import mpl_toolkits.mplot3d
 import matplotlib.pyplot as plt
 import numpystl
 
+
 def plot_mesh(array, base_height: float = 0.0, base_padding: float = 5.0):
     mesh = numpystl.create_stl_mesh_from_2d_array(array, base_height, base_padding)
     figure = plt.figure()
@@ -22,9 +23,11 @@ def plot_mesh(array, base_height: float = 0.0, base_padding: float = 5.0):
     # Show the plot to the screen
     plt.show()
 
-def get_example_array():
-    return numpy.array([[1,2,3],[4,5,6],[7,8,9]])
 
-if __name__=="__main__":
+def get_example_array():
+    return numpy.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+
+
+if __name__ == "__main__":
     array = get_example_array()
     plot_mesh(array, base_height=0)

@@ -6,7 +6,7 @@ import numpystl
 
 
 def get_simulated_world(cells_per_day, rule, number_of_days):
-    world = cellular.World(cells_per_day, rule)
+    world = cellular.World(cells_per_day, rule, ones=False)
     world.simulate(number_of_days)
     world.display()
     return numpy.vstack(world.state)
@@ -16,7 +16,7 @@ def create_mesh_of_world(
     cells_per_day=100, rule=cellular.rules.rule_777, number_of_days=100
 ):
     array = get_simulated_world(cells_per_day, rule, number_of_days)
-    return numpystl.create_stl_mesh_from_2d_array(array, base_height=2, base_padding=5)
+    return numpystl.create_stl_mesh_from_2d_array(array, base_height=0, base_padding=5)
 
 
 def plot_stl_world(cells_per_day=100, rule=cellular.rules.rule_777, number_of_days=200):
