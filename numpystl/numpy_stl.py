@@ -94,3 +94,20 @@ def create_stl_mesh_from_2d_array(array: numpy.ndarray, base_height: float = 0.0
     stl_data = create_stl_data_from_2d_array(array, base_height, base_padding)
     return stl.mesh.Mesh(stl_data, remove_empty_areas=False)
 
+
+def plot_mesh(mesh):
+    import matplotlib.pyplot as plt
+    import mpl_toolkits.mplot3d
+    figure = plt.figure()
+    axes = mpl_toolkits.mplot3d.Axes3D(figure)
+
+    axes.add_collection3d(
+        mpl_toolkits.mplot3d.art3d.Poly3DCollection(
+            mesh.vectors, facecolor="red", edgecolor="black"
+        )
+    )
+
+    scale = mesh.points.flatten(-1)
+    axes.auto_scale_xyz(scale, scale, scale)
+
+    plt.show()
