@@ -38,6 +38,7 @@ def _create_bar(
     """
     return CUBE * numpy.array([width_x, width_y, height]).T + numpy.array([x, y, 0])
 
+
 def _create_base(
     xs: numpy.ndarray, ys: numpy.ndarray, base_height: float, base_padding: float
 ):
@@ -90,7 +91,10 @@ def create_stl_data_from_2d_array(
     data["vectors"] = bars
     return data
 
-def create_stl_mesh_from_2d_array(array: numpy.ndarray, base_height: float = 0.0, base_padding: float = 5.0):
+
+def create_stl_mesh_from_2d_array(
+    array: numpy.ndarray, base_height: float = 0.0, base_padding: float = 5.0
+):
     stl_data = create_stl_data_from_2d_array(array, base_height, base_padding)
     return stl.mesh.Mesh(stl_data, remove_empty_areas=False)
 
@@ -98,6 +102,7 @@ def create_stl_mesh_from_2d_array(array: numpy.ndarray, base_height: float = 0.0
 def plot_mesh(mesh):
     import matplotlib.pyplot as plt
     import mpl_toolkits.mplot3d
+
     figure = plt.figure()
     axes = mpl_toolkits.mplot3d.Axes3D(figure)
 
