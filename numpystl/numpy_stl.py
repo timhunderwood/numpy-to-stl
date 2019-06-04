@@ -57,7 +57,7 @@ def _create_base(
     return base
 
 
-def create_stl_mesh_from_2d_array(
+def create_stl_data_from_2d_array(
     array: numpy.ndarray, base_height: float = 0.0, base_padding: float = 5.0
 ):
     xs, ys = numpy.meshgrid(numpy.arange(array.shape[1]), numpy.arange(array.shape[0]))
@@ -88,5 +88,9 @@ def create_stl_mesh_from_2d_array(
     bars = bars.reshape(-1, *bars.shape[-2:])
     data = numpy.zeros(vertices, dtype=stl.mesh.Mesh.dtype)
     data["vectors"] = bars
-    print(repr(data["vectors"]))
     return data
+
+def create_stl_mesh_from_2d_array(array: numpy.ndarray, base_height: float = 0.0, base_padding: float = 5.0):
+    stl_data = create_stl_data_from_2d_array(array, base_height, base_padding)
+    return stl.mesh.Mesh(stl_data, remove_empty_areas=False)
+

@@ -38,7 +38,7 @@ class TestNumpyStl(unittest.TestCase):
 
     def test_create_vertices_from_2d_array(self):
         input_array = numpy.array([[1, 2, 3], [4, 5, 6]])
-        test_output = sut.create_stl_mesh_from_2d_array(input_array)["vectors"]
+        test_output = sut.create_stl_data_from_2d_array(input_array)["vectors"]
         self.assertEqual((72, 3, 3), test_output.shape)
         expected_output = numpy.array(
             [
@@ -120,7 +120,7 @@ class TestNumpyStl(unittest.TestCase):
 
     def test_create_vertices_from_2d_array_with_base(self):
         input_array = numpy.array([[1, 2, 3], [4, 5, 6]])
-        test_output = sut.create_stl_mesh_from_2d_array(input_array, base_height=5)[
+        test_output = sut.create_stl_data_from_2d_array(input_array, base_height=5)[
             "vectors"
         ]
         self.assertEqual((84, 3, 3), test_output.shape)
@@ -219,7 +219,7 @@ class TestNumpyStl(unittest.TestCase):
         iterations = 10
         start = time.time()
         for _ in range(0, iterations):
-            sut.create_stl_mesh_from_2d_array(input_array)["vectors"]
+            sut.create_stl_data_from_2d_array(input_array)["vectors"]
         end = time.time()
         duration = (end - start) / iterations
         self.assertLess(duration, 1.0)
