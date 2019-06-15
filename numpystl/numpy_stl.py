@@ -54,11 +54,11 @@ def scale_and_offset(base, x, y, z, scale_x, scale_y, scale_z):
 
 
 def _get_faces_for_cell(
-    x, y, cell_value, left_value, right_value, front_value, back_value
+    x, y, cell_value, left_value, right_value, front_value, back_value, base_height
 ):
     # for top_face use bottom face (offset by cell_value)
     LOGGER.debug(f"for {x}, {y} --> {cell_value}")
-    if cell_value > 0:
+    if (cell_value > 0) or (base_height > 0):
         top_face = scale_and_offset(
             BOTTOM_FACE, x, y, cell_value, BAR_WIDTH, BAR_WIDTH, 1
         )
@@ -85,12 +85,31 @@ def _get_faces_for_cell(
     return faces
 
 
-def _get_base_face(shape):
-    bottom_face = scale_and_offset(BOTTOM_FACE, 0, 0, 0, shape[0], shape[1], 1)
-    return bottom_face
+def _get_base_faces(shape, base_height:float=0):
+    bottom_face = scale_and_offset(
+        BOTTOM_FACE, 0, 0, -base_height, shape[0], shape[1], 1
+    )
+    if base_height == 0:
+        return [bottom_face]
+
+    left_face = scale_and_offset(
+        LEFT_FACE, 0, 0, -base_height, shape[0], shape[1], base_height
+    )
+    right_face = scale_and_offset(
+        RIGHT_FACE, 0, 0, -base_height, shape[0], shape[1], base_height
+    )
+    back_face = scale_and_offset(
+        BACK_FACE, 0, 0, -base_height, shape[0], shape[1], base_height
+    )
+    front_face = scale_and_offset(
+        FRONT_FACE, 0, 0, -base_height, shape[0], shape[1], base_height
+    )
+
+    base_faces = [bottom_face, left_face, right_face, back_face, front_face]
+    return base_faces
 
 
-def create_surface_stl_array(array: numpy.ndarray) -> numpy.ndarray:
+def create_surface_stl_array(array: numpy.ndarray, base_height: float = 0) -> numpy.ndarray:
     shape = array.shape
     padded_array = numpy.zeros((shape[0] + 2, shape[1] + 2))
     padded_array[1:-1, 1:-1] = array
@@ -111,9 +130,10 @@ def create_surface_stl_array(array: numpy.ndarray) -> numpy.ndarray:
                 right_value,
                 front_value,
                 back_value,
+                base_height
             )
             all_faces += faces
-    all_faces.append(_get_base_face(shape))
+    all_faces += _get_base_faces(shape, base_height=base_height)
     all_faces = numpy.array(all_faces)
     all_faces = all_faces.reshape(-1, *all_faces.shape[-2:])
     data = numpy.zeros(all_faces.shape[0], dtype=stl.mesh.Mesh.dtype)
@@ -121,8 +141,8 @@ def create_surface_stl_array(array: numpy.ndarray) -> numpy.ndarray:
     return data
 
 
-def create_surface_mesh_from_array(array: numpy.ndarray) -> stl.mesh.Mesh:
-    stl_data = create_surface_stl_array(array)
+def create_surface_mesh_from_array(array: numpy.ndarray, base_height: float = 0) -> stl.mesh.Mesh:
+    stl_data = create_surface_stl_array(array, base_height=base_height)
     return stl.mesh.Mesh(stl_data, remove_empty_areas=False)
 
 
