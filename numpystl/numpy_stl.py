@@ -46,7 +46,7 @@ BOTTOM_FACE = numpy.array(
 
 NEIGHBOUR_FACES = (LEFT_FACE, RIGHT_FACE, BACK_FACE, FRONT_FACE)
 
-BAR_WIDTH = 1.0
+BAR_WIDTH = 1
 
 
 def scale_and_offset(base, x, y, z, scale_x, scale_y, scale_z):
@@ -87,22 +87,22 @@ def _get_faces_for_cell(
 
 def _get_base_faces(shape, base_height:float=0):
     bottom_face = scale_and_offset(
-        BOTTOM_FACE, 0, 0, -base_height, shape[0], shape[1], 1
+        BOTTOM_FACE, 0, 0, -base_height, BAR_WIDTH*shape[0], BAR_WIDTH*shape[1], 1
     )
     if base_height == 0:
         return [bottom_face]
 
     left_face = scale_and_offset(
-        LEFT_FACE, 0, 0, -base_height, shape[0], shape[1], base_height
+        LEFT_FACE, 0, 0, -base_height, BAR_WIDTH*shape[0], BAR_WIDTH*shape[1], base_height
     )
     right_face = scale_and_offset(
-        RIGHT_FACE, 0, 0, -base_height, shape[0], shape[1], base_height
+        RIGHT_FACE, 0, 0, -base_height, BAR_WIDTH*shape[0], BAR_WIDTH*shape[1], base_height
     )
     back_face = scale_and_offset(
-        BACK_FACE, 0, 0, -base_height, shape[0], shape[1], base_height
+        BACK_FACE, 0, 0, -base_height, BAR_WIDTH*shape[0], BAR_WIDTH*shape[1], base_height
     )
     front_face = scale_and_offset(
-        FRONT_FACE, 0, 0, -base_height, shape[0], shape[1], base_height
+        FRONT_FACE, 0, 0, -base_height, BAR_WIDTH*shape[0], BAR_WIDTH*shape[1], base_height
     )
 
     base_faces = [bottom_face, left_face, right_face, back_face, front_face]
@@ -111,7 +111,7 @@ def _get_base_faces(shape, base_height:float=0):
 
 def create_surface_stl_array(array: numpy.ndarray, base_height: float = 0) -> numpy.ndarray:
     shape = array.shape
-    padded_array = numpy.zeros((shape[0] + 2, shape[1] + 2))
+    padded_array = numpy.zeros((shape[0] + 2, shape[1] + 2), dtype=array.dtype)
     padded_array[1:-1, 1:-1] = array
     all_faces = []
     for x in range(1, shape[0] + 1):
@@ -123,8 +123,8 @@ def create_surface_stl_array(array: numpy.ndarray, base_height: float = 0) -> nu
             back_value = padded_array[x, y + 1]
             # account for padding by subtracting 1 when passing x y coords
             faces = _get_faces_for_cell(
-                x - 1,
-                y - 1,
+                BAR_WIDTH*(x - 1),
+                BAR_WIDTH*(y - 1),
                 cell_value,
                 left_value,
                 right_value,
@@ -137,6 +137,7 @@ def create_surface_stl_array(array: numpy.ndarray, base_height: float = 0) -> nu
     all_faces = numpy.array(all_faces)
     all_faces = all_faces.reshape(-1, *all_faces.shape[-2:])
     data = numpy.zeros(all_faces.shape[0], dtype=stl.mesh.Mesh.dtype)
+    print(all_faces.dtype)
     data["vectors"] = all_faces
     return data
 
