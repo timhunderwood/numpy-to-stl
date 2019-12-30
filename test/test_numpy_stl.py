@@ -1,6 +1,6 @@
 import unittest
 import numpy
-import numpystl.numpy_stl as sut
+import numpy_to_stl.numpy_to_stl as sut
 import time
 
 

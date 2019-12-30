@@ -2,7 +2,7 @@ import cellular
 import numpy
 import mpl_toolkits.mplot3d
 import matplotlib.pyplot as plt
-import numpystl
+import numpy_to_stl
 
 
 def get_simulated_world(cells_per_day, rule, number_of_days):
@@ -16,7 +16,7 @@ def create_mesh_of_world(
     cells_per_day=100, rule=cellular.rules.rule_777, number_of_days=100
 ):
     array = get_simulated_world(cells_per_day, rule, number_of_days)
-    return numpystl.create_surface_mesh_from_array(array, base_height=1,)
+    return numpy_to_stl.create_surface_mesh_from_array(array, base_height=1, )
 
 
 def plot_stl_world(cells_per_day=100, rule=cellular.rules.rule_777, number_of_days=200):

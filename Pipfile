@@ -4,7 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-cellular = {editable = true,git = "https://timhunderwood@github.com/timhunderwood/cellular-automata.git"}
+cellular = {editable = true,git = "https://github.com/timhunderwood/cellular-automata.git"}
 imageio = "*"
 
 [packages]

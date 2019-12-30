@@ -1,7 +1,7 @@
 import numpy
 import imageio
 import matplotlib.pyplot as plt
-import numpystl
+import numpy_to_stl
 
 
 def convert_raw_image(file_name):
@@ -22,11 +22,11 @@ def normalise_camera_image(array):
 
 
 if __name__ == "__main__":
-    numpystl.numpy_stl.BAR_WIDTH = 0.25
+    numpy_to_stl.numpy_to_stl.BAR_WIDTH = 0.25
     convert_raw_image("raw_075.png")
     raw = imageio.imread("raw_075_cropped.png")
     od = normalise_camera_image(raw)
-    mesh = numpystl.create_surface_mesh_from_array(od,base_height=5)
+    mesh = numpy_to_stl.create_surface_mesh_from_array(od, base_height=5)
     plt.matshow(od)
     plt.show()
     mesh.save("bec_surface_with_base_scaled.stl")

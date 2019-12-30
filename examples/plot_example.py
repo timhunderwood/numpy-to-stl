@@ -1,7 +1,7 @@
 import numpy
 import mpl_toolkits.mplot3d
 import matplotlib.pyplot as plt
-import numpystl
+import numpy_to_stl
 
 
 def get_example_array():
@@ -14,6 +14,6 @@ def get_example_array():
 
 if __name__ == "__main__":
     array = get_example_array()
-    mesh = numpystl.create_surface_mesh_from_array(array, base_height=2.0)
+    mesh = numpy_to_stl.create_surface_mesh_from_array(array, base_height=2.0)
     #mesh.save("small_example_100_100.stl")
-    numpystl.plot_mesh(mesh)
+    numpy_to_stl.plot_mesh(mesh)
