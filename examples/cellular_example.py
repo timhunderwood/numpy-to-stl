@@ -8,7 +8,7 @@ import numpy_to_stl
 def get_simulated_world(cells_per_day, rule, number_of_days):
     world = cellular.World(cells_per_day, rule, ones=False)
     world.simulate(number_of_days)
-    world.display()
+    world.display(landscape=True)
     return numpy.vstack(world.state)
 
 
@@ -42,4 +42,4 @@ def plot_stl_world(cells_per_day=100, rule=cellular.rules.rule_777, number_of_da
 
 
 if __name__ == "__main__":
-    plot_stl_world()
+    plot_stl_world(cells_per_day=100, number_of_days=200)
