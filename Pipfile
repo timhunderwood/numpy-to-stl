@@ -4,11 +4,13 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+cellular = {editable = true,git = "https://github.com/timhunderwood/cellular-automata.git"}
+imageio = "*"
 
 [packages]
 numpy-stl = "*"
 numpy = "*"
-black = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.7"
