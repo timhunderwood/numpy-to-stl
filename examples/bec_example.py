@@ -15,7 +15,7 @@ def normalise_camera_image(array):
     offset = 5000.0
     optical_density = (array - offset) / scale
     optical_density = numpy.clip(optical_density, a_min=0, a_max=4)
-    z_scale_factor = 0.25*0.5 * max(array.shape) / optical_density.max()
+    z_scale_factor = 0.25 * 0.5 * max(array.shape) / optical_density.max()
     scaled_array = z_scale_factor * optical_density
     print(scaled_array.shape)
     return scaled_array
