@@ -109,7 +109,7 @@ def _get_base_faces(shape, base_height:float=0):
     return base_faces
 
 
-def create_surface_stl_array(array: numpy.ndarray, base_height: float = 0) -> numpy.ndarray:
+def _create_surface_stl_array(array: numpy.ndarray, base_height: float = 0) -> numpy.ndarray:
     shape = array.shape
     padded_array = numpy.zeros((shape[0] + 2, shape[1] + 2), dtype=array.dtype)
     padded_array[1:-1, 1:-1] = array
@@ -143,11 +143,21 @@ def create_surface_stl_array(array: numpy.ndarray, base_height: float = 0) -> nu
 
 
 def create_surface_mesh_from_array(array: numpy.ndarray, base_height: float = 0) -> stl.mesh.Mesh:
-    stl_data = create_surface_stl_array(array, base_height=base_height)
+    """Create a stl Mesh object from a numpy array.
+
+    :param array: The numpy array to be converted into a STL mesh
+    :param base_height: A base will be drawn under the array of height base_height
+    :return: stl Mesh object
+    """
+    stl_data = _create_surface_stl_array(array, base_height=base_height)
     return stl.mesh.Mesh(stl_data, remove_empty_areas=False)
 
 
-def plot_mesh(mesh):
+def plot_mesh(mesh: stl.mesh.Mesh) -> None:
+    """Plot a stl.mesh.Mesh object using matplotlib.
+
+    :param mesh: mesh object to plot
+    """
     import matplotlib.pyplot as plt
     import mpl_toolkits.mplot3d
 

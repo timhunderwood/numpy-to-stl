@@ -1,5 +1,5 @@
 from numpystl.numpy_stl import (
-    create_surface_stl_array,
+    _create_surface_stl_array,
     create_surface_mesh_from_array,
     plot_mesh,
 )

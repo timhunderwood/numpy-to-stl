@@ -36,7 +36,7 @@ class TestNumpyStl(unittest.TestCase):
 
     def test_create_surface_stl_array(self):
         input_array = numpy.identity(3, dtype=int)
-        test_output = sut.create_surface_stl_array(input_array, base_height = 0)
+        test_output = sut._create_surface_stl_array(input_array, base_height = 0)
         expected_output = numpy.array(
             [
                 (
